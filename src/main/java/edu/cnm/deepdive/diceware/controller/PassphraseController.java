@@ -21,4 +21,10 @@ public class PassphraseController {
   public String[] get(@RequestParam(required = false, defaultValue = "4") int length) {
     return generator.generate(length);
   }
+
+  @GetMapping(value = "/generate", produces = MediaType.TEXT_PLAIN_VALUE)
+  public String get(@RequestParam(required = false, defaultValue = "4") int length,
+      @RequestParam(required = false, defaultValue = " ") String delimiter) {
+    return String.join(delimiter, get(length));
+  }
 }
