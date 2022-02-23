@@ -3,6 +3,7 @@ package edu.cnm.deepdive.diceware.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class DicewareGenerator implements PassphraseGenerator {
 
@@ -17,11 +18,13 @@ public class DicewareGenerator implements PassphraseGenerator {
 
   @Override
   public String[] generate(int length) {
-    String[] selection = new String[length];
-    for (int i = 0; i < selection.length; i++) {
-      selection[i] = words.get(rng.nextInt(words.size()));
+    return IntStream
+        .generate(() -> rng.nextInt(words.size()))
+        .limit(length)
+        .mapToObj(words::get)
+        .toArray(String[]::new);
+
     }
-    return selection;
   }
 
 }
